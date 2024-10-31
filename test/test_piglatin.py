@@ -25,3 +25,8 @@ class TestPigLatin(unittest.TestCase):
         translator = PigLatin("apple")
 
         self.assertEqual("appleyay", translator.translate())
+
+    def test_translate_string_ending_in_consonant(self):
+        translator = PigLatin("ask")
+
+        self.assertEqual("askay", translator.translate())

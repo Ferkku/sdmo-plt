@@ -18,6 +18,6 @@ class PigLatin:
             elif word[-1] in 'aeiou':
                 translated_words.append(word + 'yay')
             else:
-                translated_words.append(word)
+                translated_words.append(word + 'ay')
         return ' '.join(translated_words)
 
