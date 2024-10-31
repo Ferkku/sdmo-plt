@@ -10,3 +10,8 @@ class TestPigLatin(unittest.TestCase):
         phrase = translator.get_phrase()
 
         self.assertEqual("hello world", phrase)
+
+    def test_translate_empty_string(self):
+        translator = PigLatin("hello world")
+
+        self.assertEqual("nil", translator.translate())
