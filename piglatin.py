@@ -1,8 +1,11 @@
+from string import punctuation
+
 
 class PigLatin:
     def __init__(self, phrase: str):
         self.phrase = phrase
         self.vowels = 'aeiou'
+        self.punctuation = '.,;:\'?!()'
 
     def get_phrase(self) -> str:
         return self.phrase
@@ -21,20 +24,19 @@ class PigLatin:
         return ' '.join(translated_words)
 
     def apply_word_rules(self, word: str) -> str:
-        if not word[-1].isalpha():
-            punctuation = word[-1]
+        punc = ''
+        if word[-1] in self.punctuation:
+            punc = word[-1]
             word = word[:-1]
-        else:
-            punctuation = ''
         if word[0] not in self.vowels:
             while word[0] not in self.vowels:
                 word = word[1:] + word[0]
         if word[-1] == 'y':
-            return word + 'nay' + punctuation
+            return word + 'nay' + punc
         elif word[-1] in self.vowels:
-            return word + 'yay' + punctuation
+            return word + 'yay' + punc
         else:
-            return word + 'ay' + punctuation
+            return word + 'ay' + punc
 
     def handle_composite_word(self, word: str):
         composite_words = word.split('-')
