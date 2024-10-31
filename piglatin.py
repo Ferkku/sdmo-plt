@@ -21,14 +21,20 @@ class PigLatin:
         return ' '.join(translated_words)
 
     def apply_word_rules(self, word: str) -> str:
-        while word[0] not in self.vowels:
-            word = word[1:] + word[0]
-        if word[-1] == 'y':
-            return word + 'nay'
-        elif word[-1] in self.vowels:
-            return word + 'yay'
+        if not word[-1].isalpha():
+            punctuation = word[-1]
+            word = word[:-1]
         else:
-            return word + 'ay'
+            punctuation = ''
+        if word[0] not in self.vowels:
+            while word[0] not in self.vowels:
+                word = word[1:] + word[0]
+        if word[-1] == 'y':
+            return word + 'nay' + punctuation
+        elif word[-1] in self.vowels:
+            return word + 'yay' + punctuation
+        else:
+            return word + 'ay' + punctuation
 
     def handle_composite_word(self, word: str):
         composite_words = word.split('-')
@@ -36,3 +42,4 @@ class PigLatin:
         for comp_word in composite_words:
             temp_comp_words.append(self.apply_word_rules(comp_word))
         return '-'.join(temp_comp_words)
+
