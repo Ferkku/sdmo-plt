@@ -2,6 +2,7 @@
 class PigLatin:
     def __init__(self, phrase: str):
         self.phrase = phrase
+        self.vowels = 'aeiou'
 
     def get_phrase(self) -> str:
         return self.phrase
@@ -11,32 +12,27 @@ class PigLatin:
             return "nil"
         words = self.phrase.split()
         translated_words = []
-        vowels = 'aeiou'
-        consonants = 'bcdfghjklmnpqrstvwxyz'
 
         for word in words:
-            parts = word.split('-')
-            translated_parts = []
-            for part in parts:
-                if part[0] in vowels:
-                    if part[-1] in vowels:
-                        translated_parts.append(part + 'yay')
-                    elif part[-1] == 'y':
-                        translated_parts.append(part + 'nay')
-                    else:
-                        translated_parts.append(part + 'ay')
-                else:
-                    prefix = ''
-                    while part[0] not in vowels and part[0] in consonants:
-                        prefix += part[0]
-                        part = part[1:]
-                    if part[-1] in vowels:
-                        translated_parts.append(part + prefix + 'ay')
-                    elif part[-1] == 'y':
-                        translated_parts.append(part + prefix + 'nay')
-                    else:
-                        translated_parts.append(part + prefix + 'ay')
-            translated_words.append('-'.join(translated_parts))
-
+            if '-' in word:
+                translated_words.append(self.handle_composite_word(word))
+            else:
+                translated_words.append(self.apply_word_rules(word))
         return ' '.join(translated_words)
 
+    def apply_word_rules(self, word: str) -> str:
+        while word[0] not in self.vowels:
+            word = word[1:] + word[0]
+        if word[-1] == 'y':
+            return word + 'nay'
+        elif word[-1] in self.vowels:
+            return word + 'yay'
+        else:
+            return word + 'ay'
+
+    def handle_composite_word(self, word: str):
+        composite_words = word.split('-')
+        temp_comp_words = []
+        for comp_word in composite_words:
+            temp_comp_words.append(self.apply_word_rules(comp_word))
+        return '-'.join(temp_comp_words)
