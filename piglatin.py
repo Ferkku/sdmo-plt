@@ -8,6 +8,7 @@ class PigLatin:
     def __init__(self, phrase: str):
         self.phrase = phrase
         self.vowels = 'aeiou'
+        self.allowed_chars = 'aeioubcdfghjklmnpqrstvwxyz-.,;:\'?!()'
         self.punctuation = '.,;:\'?!()'
 
     def get_phrase(self) -> str:
@@ -16,12 +17,12 @@ class PigLatin:
     def translate(self) -> str:
         if not self.phrase:
             return "nil"
-        if any(char not in (self.vowels + 'bcdfghjklmnpqrstvwxyz-' + self.punctuation + ' ') for char in self.phrase.lower()):
-            raise PigLatinError("Invalid character in phrase")
         words = self.phrase.split()
         translated_words = []
 
         for word in words:
+            if word[-1] not in self.allowed_chars:
+                raise PigLatinError
             if '-' in word:
                 translated_words.append(self.handle_composite_word(word))
             else:
