@@ -1,5 +1,8 @@
+
 from string import punctuation
 
+class PigLatinError(Exception):
+    pass
 
 class PigLatin:
     def __init__(self, phrase: str):
@@ -13,6 +16,8 @@ class PigLatin:
     def translate(self) -> str:
         if not self.phrase:
             return "nil"
+        if any(char not in (self.vowels + 'bcdfghjklmnpqrstvwxyz-' + self.punctuation + ' ') for char in self.phrase.lower()):
+            raise PigLatinError("Invalid character in phrase")
         words = self.phrase.split()
         translated_words = []
 
@@ -25,7 +30,7 @@ class PigLatin:
 
     def apply_word_rules(self, word: str) -> str:
         punc = ''
-        if word[-1] in self.punctuation:
+        if word[-1] in punctuation:
             punc = word[-1]
             word = word[:-1]
         if word[0] not in self.vowels:
