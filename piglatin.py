@@ -7,9 +7,9 @@ class PigLatinError(Exception):
 class PigLatin:
     def __init__(self, phrase: str):
         self.phrase = phrase
-        self.vowels = 'aeiou'
-        self.allowed_chars = 'aeioubcdfghjklmnpqrstvwxyz-.,;:\'?!()'
-        self.punctuation = '.,;:\'?!()'
+        self.vowels = 'aeiouAEIOU'
+        self.allowed_chars = 'abcdefghijklmnopqrstuvwxyz-.,;:\'?!()'
+        self.upper_case_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     def get_phrase(self) -> str:
         return self.phrase
