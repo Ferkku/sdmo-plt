@@ -15,7 +15,11 @@ class PigLatin:
 
         for word in words:
             if word[0] not in vowels:
-                word = word[1:] + word[0]
+                consonant_cluster = ''
+                while word and word[0] not in vowels:
+                    consonant_cluster += word[0]
+                    word = word[1:]
+                word += consonant_cluster
             if word[-1] == 'y':
                 translated_words.append(word + 'nay')
             elif word[-1] in vowels:
